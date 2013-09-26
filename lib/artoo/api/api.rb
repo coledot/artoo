@@ -91,6 +91,8 @@ module Artoo
       end
 
       def command_params
+        # XXX HACK return before the call to load(), since it (somehow???) throws an exception
+        return nil if @req.body.count == 0
         data = MultiJson.load(@req.body, :symbolize_keys => true)
         if data && params = data[:params]
           params.size == 1 ? params.first : params
